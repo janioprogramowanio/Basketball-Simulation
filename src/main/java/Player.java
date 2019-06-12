@@ -138,7 +138,7 @@ public class Player implements Moving,Distance,PlayerActions{
 		
 	}
 	@Override
-	public int chceckPosition(Court c) {
+	public int checkPosition(Court c) {
 		
 		if(c.coordinates[this.yPosition][this.xPosition]==1)
 		{
@@ -149,7 +149,34 @@ public class Player implements Moving,Distance,PlayerActions{
 	}
 	@Override
 	public void readyToThrow(Team t, OpponnentTeam o, Court c, Ball b) {
-		// TODO Auto-generated method stub
+		
+		if(this.checkPosition(c)==1)
+		{
+			if(this.twoPointsThrow + rand.nextInt(6)>10)
+			{
+				t.setScore(t.getScore()+2);
+				t.newWinAction();
+				o.newLooseAction();
+			}
+			else
+			{
+				//b.rebound(this,t2);
+			}
+		}
+		else if(this.checkPosition(c)==0) 
+		{
+			if(this.threePointsThorw+rand.nextInt(6)>10)
+			{
+				t.setScore(t.getScore()+3);
+				t.newWinAction();
+				o.newLooseAction();
+			}
+			else
+			{
+				//b.rebound(this,t2);
+			}
+		}
+		
 		
 	}
 	@Override

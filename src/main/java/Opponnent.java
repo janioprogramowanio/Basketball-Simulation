@@ -36,5 +36,37 @@ public class Opponnent extends Player implements Moving{
 			 this.xPosition-=4;
 		 }
 	}
+	
+	
+	public void readyToThrow(Team t, OpponnentTeam o, Court c, Ball b) {
+	
+		if(this.checkPosition(c)==1)
+		{
+			if(this.twoPointsThrow + rand.nextInt(6)>10)
+			{
+				o.setScore(o.getScore()+2);
+				o.newWinAction();
+				t.newLooseAction();
+			}
+			else
+			{
+				//b.rebound(this,t2);
+			}
+		}
+		else if(this.checkPosition(c)==0) 
+		{
+			if(this.threePointsThorw+rand.nextInt(6)>10)
+			{
+				o.setScore(o.getScore()+3);
+				o.newWinAction();
+				t.newLooseAction();
+			}
+			else
+			{
+				//b.rebound(this,t2);
+			}
+	}
 
+
+	}
 }
