@@ -1,6 +1,7 @@
+import java.util.Arrays;
 import java.util.Random;
 
-public class Player implements Moving{
+public class Player implements Moving,Distance,PlayerActions{
 
 	Random rand = new Random();
 	private int twoPointsThrow=rand.nextInt(10);
@@ -61,6 +62,7 @@ public class Player implements Moving{
 	public void setHasBall(boolean hasBall) {
 		this.hasBall = hasBall;
 	}
+	
 	@Override
 	public void moving() {
 		
@@ -85,6 +87,74 @@ public class Player implements Moving{
 		 {
 			 this.xPosition-=4;
 		 }
+		
+	}
+	@Override
+	public int distanceFromPlayer(Player p) {
+		
+		return Math.abs(this.xPosition-p.getxPosition()+Math.abs(this.yPosition-p.getyPosition()));
+	}
+	@Override
+	public Player nearestPlayer(Team t) {
+		int [] distance = new int [5];
+		distance[0]=distanceFromPlayer(t.p1);
+		distance[1]=distanceFromPlayer(t.p2);
+		distance[2]=distanceFromPlayer(t.p3);
+		distance[3]=distanceFromPlayer(t.p4);
+		distance[4]=distanceFromPlayer(t.p5);
+		Arrays.sort(distance);
+		int newDistance=distance[0];
+		if(newDistance==distanceFromPlayer(t.p1))
+		{
+			
+			return t.p1;
+		}
+		if(newDistance==distanceFromPlayer(t.p2))
+		{
+			
+			return t.p2;
+		}
+		if(newDistance==distanceFromPlayer(t.p3))
+		{
+			
+			return t.p3;
+		}
+		 if(newDistance==distanceFromPlayer(t.p4))
+		{
+			 
+			return t.p4;
+		}
+		 if(newDistance==distanceFromPlayer(t.p5))
+		{
+			 
+			return t.p5;
+		}
+		else
+		return null;
+		
+		
+
+
+		
+	}
+	@Override
+	public int chceckPosition(Court c) {
+		
+		if(c.coordinates[this.yPosition][this.xPosition]==1)
+		{
+			return 1;
+		}
+		else 
+			return 0;
+	}
+	@Override
+	public void readyToThrow(Team t, OpponnentTeam o, Court c, Ball b) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void throwBall(Team t, Opponnent o, Court c, Ball b) {
+		// TODO Auto-generated method stub
 		
 	}
 }
