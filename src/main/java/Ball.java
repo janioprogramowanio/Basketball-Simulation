@@ -8,7 +8,7 @@ public class Ball implements BallActions{
 	@Override
 	public void passBall(Team t) {
 		
-		int randPlayer=rand.nextInt(5)+1;
+		int randPlayer=rand.nextInt(5);
 		ArrayList<Player> playerList = new ArrayList<Player>();
 		playerList.add(t.p1);
 		playerList.add(t.p2);
@@ -25,12 +25,7 @@ public class Ball implements BallActions{
 		{
 			randPlayer=rand.nextInt(5)+1;
 		}
-		
-		
-		
-		
-		
-
+	
 		
 	}
 
@@ -51,7 +46,7 @@ public class Ball implements BallActions{
 		playerList.add(o.p4);
 		playerList.add(o.p5);
 		
-		if(checkBall(playerList)>4)
+		if(checkBall(playerList)<=4)
 		{
 			if(playerList.get(checkBall(playerList)).getPass()+rand1>
 				playerList.get(checkBall(playerList)).nearestPlayer(o).getSteal())
@@ -97,6 +92,7 @@ public class Ball implements BallActions{
 		}
 		
 	}
+	
 
 	@Override
 	public int checkBall(ArrayList<Player> playerList) {

@@ -66,33 +66,33 @@ public class Player implements Moving,Distance,PlayerActions{
 	@Override
 	public void moving() {
 		
-		if((this.yPosition>2 && this.yPosition<39) && (this.xPosition>2 && this.yPosition<29))
+		if((yPosition>2 && yPosition<39) && (xPosition>2 && yPosition<29))
 		 {
-			this.yPosition+=rand.nextInt(2);
-			this.xPosition+=rand.nextInt(2);
+			yPosition+=rand.nextInt(2);
+			xPosition+=rand.nextInt(2)-1;
 		 }
-		 else if (this.yPosition<=2)
+		  if (yPosition<=2)
 		 {
-			 this.yPosition+=4;
+			 yPosition+=4;
 		 }
-		 else if(this.yPosition>=39)
+		  if(yPosition>=39)
 		 {
-			 this.yPosition-=4;
+			 yPosition-=4;
 		 }
-		 else if (this.xPosition<=2)
+		  if (xPosition<=2)
 		 {
-			 this.xPosition+=4;
+			 xPosition+=4;
 		 }
-		 else if(this.xPosition>=29)
+		  if(xPosition>=29)
 		 {
-			 this.xPosition-=4;
+			 xPosition-=4;
 		 }
 		
 	}
 	@Override
 	public int distanceFromPlayer(Player p) {
 		
-		return Math.abs(this.xPosition-p.getxPosition()+Math.abs(this.yPosition-p.getyPosition()));
+		return Math.abs(xPosition-p.getxPosition()+Math.abs(yPosition-p.getyPosition()));
 	}
 	@Override
 	public Player nearestPlayer(Team t) {
@@ -137,22 +137,24 @@ public class Player implements Moving,Distance,PlayerActions{
 
 		
 	}
+	
 	@Override
 	public int checkPosition(Court c) {
 		
-		if(c.coordinates[this.yPosition][this.xPosition]==1)
+		if(c.coordinates[yPosition][xPosition]==1)
 		{
 			return 1;
 		}
 		else 
 			return 0;
 	}
+	
 	@Override
-	public void readyToThrow(Team t, OpponnentTeam o, Court c, Ball b) {
+	public void throwBall(Team t, OpponnentTeam o, Court c, Ball b) {
 		
-		if(this.checkPosition(c)==1)
+		if(checkPosition(c)==1)
 		{
-			if(this.twoPointsThrow + rand.nextInt(6)>10)
+			if(twoPointsThrow + rand.nextInt(6)>10)
 			{
 				t.setScore(t.getScore()+2);
 				t.newWinAction();
@@ -160,12 +162,12 @@ public class Player implements Moving,Distance,PlayerActions{
 			}
 			else
 			{
-				//b.rebound(this,t2);
+				b.rebound(o,this);
 			}
 		}
-		else if(this.checkPosition(c)==0) 
+		else if(checkPosition(c)==0) 
 		{
-			if(this.threePointsThorw+rand.nextInt(6)>10)
+			if(threePointsThorw+rand.nextInt(6)>10)
 			{
 				t.setScore(t.getScore()+3);
 				t.newWinAction();
@@ -173,15 +175,29 @@ public class Player implements Moving,Distance,PlayerActions{
 			}
 			else
 			{
-				//b.rebound(this,t2);
+				b.rebound(o,this);
 			}
 		}
 		
 		
 	}
 	@Override
-	public void throwBall(Team t, Opponnent o, Court c, Ball b) {
-		// TODO Auto-generated method stub
+	public void readyToThrow(Team t, OpponnentTeam o, Court c, Ball b) {
+		
+		moving();
+		if(yPosition>20)
+		{
+			if(hasBall)
+			{
+				throwBall(t, o, c, b);
+			}
+			else
+			{
+				moving();
+				b.reclaimBall(t, o);
+			}
+			
+		}
 		
 	}
 }

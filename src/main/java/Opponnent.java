@@ -1,6 +1,6 @@
 import java.util.Random;
 
-public class Opponnent extends Player implements Moving{
+public class Opponnent extends Player {
 	
 	Random rand = new Random();
 	private int twoPointsThrow=rand.nextInt(10);
@@ -12,37 +12,38 @@ public class Opponnent extends Player implements Moving{
 	private int yPosition;
 	private boolean hasBall=false;
 	
+	@Override
 	public void moving()
 	{
-		if((this.yPosition>2 && this.yPosition<39) && (this.xPosition>2 && this.yPosition<29))
+		if((this.yPosition>2 && yPosition<39) && (xPosition>2 && yPosition<29))
 		 {
-			this.yPosition-=rand.nextInt(2);
-			this.xPosition+=rand.nextInt(2);
+			yPosition-=rand.nextInt(2);
+			xPosition+=rand.nextInt(2)-1;
 		 }
-	  else if (this.yPosition<=2)
+		if (yPosition<=2)
 		 {
-			 this.yPosition+=4;
+			 yPosition+=4;
 		 }
-		 else if(this.yPosition>=39)
+	   if(yPosition>=39)
 		 {
-			 this.yPosition-=4;
+			 yPosition-=4;
 		 }
-		 else if (this.xPosition<=2)
+	   if (xPosition<=2)
 		 {
-			 this.xPosition+=4;
+			 xPosition+=4;
 		 }
-		 else if(this.xPosition>=29)
+	   if(xPosition>=29)
 		 {
-			 this.xPosition-=4;
+			 xPosition-=4;
 		 }
 	}
 	
+	@Override
+	public void throwBall(Team t, OpponnentTeam o, Court c, Ball b) {
 	
-	public void readyToThrow(Team t, OpponnentTeam o, Court c, Ball b) {
-	
-		if(this.checkPosition(c)==1)
+		if(checkPosition(c)==1)
 		{
-			if(this.twoPointsThrow + rand.nextInt(6)>10)
+			if(twoPointsThrow + rand.nextInt(6)>10)
 			{
 				o.setScore(o.getScore()+2);
 				o.newWinAction();
@@ -50,12 +51,12 @@ public class Opponnent extends Player implements Moving{
 			}
 			else
 			{
-				//b.rebound(this,t2);
+				b.rebound(t,this);
 			}
 		}
-		else if(this.checkPosition(c)==0) 
+		else if(checkPosition(c)==0) 
 		{
-			if(this.threePointsThorw+rand.nextInt(6)>10)
+			if(threePointsThorw+rand.nextInt(6)>10)
 			{
 				o.setScore(o.getScore()+3);
 				o.newWinAction();
@@ -63,10 +64,31 @@ public class Opponnent extends Player implements Moving{
 			}
 			else
 			{
-				//b.rebound(this,t2);
+				b.rebound(t,this);
 			}
+		}
+
+
 	}
-
-
+	
+	@Override
+	public void readyToThrow(Team t, OpponnentTeam o, Court c, Ball b) {
+		
+		moving();
+		if(yPosition<20)
+		{
+			if(hasBall)
+			{
+				throwBall(t, o, c, b);
+				
+			}
+			else
+			{
+				moving();
+				b.reclaimBall(t, o);
+			}
+			
+		}
+		
 	}
 }
