@@ -5,18 +5,16 @@ public class Game {
 	
 	public static void main(String[] args) {
 		
-		Team t = new Team();
-		OpponnentTeam o = new OpponnentTeam();
+		Team t = new FirstTeam();
+		Team o  = new OpponnentTeam();
 		Ball b = new Ball();
 		Court c = new Court();
 		t.spawn();
 		o.spawn();
-		//t.p1.setHasBall(true);
-		
 		
 		Timer timer = new Timer();
 		TimerTask task = new TimerTask() {
-
+		
 			@Override
 			public void run() {
 				
@@ -31,6 +29,11 @@ public class Game {
 				t.p3.readyToThrow(t, o, c, b);
 				t.p4.readyToThrow(t, o, c, b);
 				t.p5.readyToThrow(t, o, c, b);
+				
+				
+				
+
+
 				
 				
 				System.out.println("Team 1 :" + t.getScore());

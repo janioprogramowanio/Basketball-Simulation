@@ -30,7 +30,7 @@ public class Ball implements BallActions{
 	}
 
 	@Override
-	public void reclaimBall(Team t, OpponnentTeam o) {
+	public void reclaimBall(Team t, Team o) {
 		
 		int rand1=rand.nextInt(10);
 		int rand2=rand.nextInt(10);
@@ -49,7 +49,7 @@ public class Ball implements BallActions{
 		if(checkBall(playerList)<=4)
 		{
 			if(playerList.get(checkBall(playerList)).getPass()+rand1>
-				playerList.get(checkBall(playerList)).nearestPlayer(o).getSteal())
+				playerList.get(checkBall(playerList)).nearestPlayer(o).getSteal()+rand2)
 			{
 				passBall(t);
 			}
@@ -62,7 +62,7 @@ public class Ball implements BallActions{
 		else
 		{
 			if(playerList.get(checkBall(playerList)).getPass()+rand1>
-			playerList.get(checkBall(playerList)).nearestPlayer(t).getSteal())
+			playerList.get(checkBall(playerList)).nearestPlayer(t).getSteal()+rand2)
 		{
 			passBall(o);
 		}
