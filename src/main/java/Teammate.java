@@ -67,6 +67,7 @@ public class Teammate extends Player{
 			if(getTwoPointsThrow() + rand.nextInt(6)>10)
 			{
 				t.setScore(t.getScore()+2);
+				this.setPts(getPts()+2);
 				t.newWinAction();
 				o.newLooseAction();
 			}
@@ -80,6 +81,7 @@ public class Teammate extends Player{
 			if(getThreePointsThorw()+rand.nextInt(6)>10)
 			{
 				t.setScore(t.getScore()+3);
+				this.setPts(getPts()+3);
 				t.newWinAction();
 				o.newLooseAction();
 			}

@@ -12,6 +12,7 @@ public abstract class Player implements Moving,Distance,PlayerActions{
 	private int xPosition;
 	private int yPosition;
 	private boolean hasBall;
+	private int pts=0;
 	
 	public Player(int twoPointsThrow, int threePointsThrow, int pass, int steal, int rebound, int xPosition, int yPosition, boolean hasBall)
 	{
@@ -75,6 +76,12 @@ public abstract class Player implements Moving,Distance,PlayerActions{
 	public void setHasBall(boolean hasBall) {
 		this.hasBall = hasBall;
 	}
+	public int getPts() {
+		return pts;
+	}
+	public void setPts(int pts) {
+		this.pts = pts;
+	}
 	
 	
 	@Override
@@ -132,6 +139,8 @@ public abstract class Player implements Moving,Distance,PlayerActions{
 		else 
 			return 0;
 	}
+
+
 	
 	
 	

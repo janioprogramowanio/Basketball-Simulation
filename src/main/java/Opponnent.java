@@ -44,6 +44,7 @@ public class Opponnent extends Player {
 			if(this.getTwoPointsThrow() + rand.nextInt(6)>10)
 			{
 				o.setScore(o.getScore()+2);
+				this.setPts(getPts()+2);
 				o.newWinAction();
 				t.newLooseAction();
 			}
@@ -57,6 +58,7 @@ public class Opponnent extends Player {
 			if(this.getThreePointsThorw()+rand.nextInt(6)>10)
 			{
 				o.setScore(o.getScore()+3);
+				this.setPts(getPts()+3);
 				o.newWinAction();
 				t.newLooseAction();
 			}
