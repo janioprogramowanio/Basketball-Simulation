@@ -1,17 +1,17 @@
-import java.util.Random;
+
 
 public class OpponnentTeam extends Team{
 	
 	private int score=0;
-	Random rand = new Random();
+
 	
 	
 	public OpponnentTeam() {
-		super.p1= new Opponnent();
-		super.p2= new Opponnent();
-		super.p3= new Opponnent();
-		super.p4= new Opponnent();
-		super.p5= new Opponnent();
+		p1= new Opponnent();
+		p2= new Opponnent();
+		p3= new Opponnent();
+		p4= new Opponnent();
+		p5= new Opponnent();
 	}
 
 

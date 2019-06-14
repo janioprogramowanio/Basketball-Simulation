@@ -10,7 +10,7 @@ public abstract class Team {
 	Player p4;
 	Player p5;
 	
-	
+	Random rand = new Random();
 	
 	public abstract void spawn();
 	

@@ -3,6 +3,8 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -28,28 +30,26 @@ public class GameDisplay extends JFrame implements ActionListener{
 	
 	JPanel panelTeam1 = new JPanel();
 	JPanel panelTeam2 = new JPanel();
-	int scoreT1, scoreT2;
-	int scoreP1T1, scoreP2T1, scoreP3T1, scoreP4T1, scoreP5T1, scoreP1T2, scoreP2T2, scoreP3T2, scoreP4T2, scoreP5T2;
+	
+	
+	Team t;
+	Team o;
+	Ball b;
+	Court c;
+	Timer timer;
 	
 	
 	
-	
-	
-	public GameDisplay(int scoreT1, int scoreT2 ,int scoreP1T1, int scoreP2T1, int scoreP3T1,
-			int scoreP4T1, int scoreP5T1, int scoreP1T2, int scoreP2T2,int scoreP3T2,int scoreP4T2, int scoreP5T2) {
+	public GameDisplay() {
 		
-		this.scoreT1=scoreT1;
-		this.scoreT2=scoreT2;
-		this.scoreP1T1=scoreP1T1;
-		this.scoreP2T1=scoreP2T1;
-		this.scoreP3T1=scoreP3T1;
-		this.scoreP4T1=scoreP4T1;
-		this.scoreP5T1=scoreP5T1;
-		this.scoreP1T2=scoreP1T2;
-		this.scoreP2T2=scoreP2T2;
-		this.scoreP3T2=scoreP3T2;
-		this.scoreP4T2=scoreP4T2;
-		this.scoreP5T2=scoreP5T2;
+		 t = new FirstTeam();
+		 o  = new OpponnentTeam();
+		 b = new Ball();
+		 c = new Court();
+		t.spawn();
+		o.spawn();
+		
+		timer = new Timer();
 
 
 		frame.setBounds(100,100,800,600);
@@ -57,17 +57,17 @@ public class GameDisplay extends JFrame implements ActionListener{
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setBackground(Color.black);
 		
-		p1t1 = new PlayerLabel("Player 1: "+scoreP1T1);
-		p2t1 = new PlayerLabel("Player 2: "+scoreP2T1);
-		p3t1 = new PlayerLabel("Player 3: "+scoreP3T1);
-		p4t1 = new PlayerLabel("Player 4: "+scoreP4T1);
-		p5t1 = new PlayerLabel("Player 5: "+scoreP5T1);
+		p1t1 = new PlayerLabel("Player 1: ");
+		p2t1 = new PlayerLabel("Player 2: ");
+		p3t1 = new PlayerLabel("Player 3: ");
+		p4t1 = new PlayerLabel("Player 4: ");
+		p5t1 = new PlayerLabel("Player 5: ");
 		
-		p1t2 = new PlayerLabel("Player 1: "+scoreP1T2);
-		p2t2 = new PlayerLabel("Player 2: "+scoreP2T2);
-		p3t2 = new PlayerLabel("Player 3: "+scoreP3T2);
-		p4t2 = new PlayerLabel("Player 4: "+scoreP4T2);
-		p5t2 = new PlayerLabel("Player 5: "+scoreP5T2);
+		p1t2 = new PlayerLabel("Player 1: ");
+		p2t2 = new PlayerLabel("Player 2: ");
+		p3t2 = new PlayerLabel("Player 3: ");
+		p4t2 = new PlayerLabel("Player 4: ");
+		p5t2 = new PlayerLabel("Player 5: ");
 		
 		team1.setFont(new FontUIResource("Arial",Font.BOLD , 30));
 		team1.setForeground(Color.YELLOW);
@@ -78,12 +78,12 @@ public class GameDisplay extends JFrame implements ActionListener{
 		scoreLabel.setFont(new FontUIResource("Arial",Font.BOLD , 40));
 		scoreLabel.setForeground(Color.YELLOW);
 		
-		score = new JLabel(scoreT1+":"+scoreT1);
+		score = new JLabel(t.getScore()+":"+o.getScore());
 		score.setFont(new FontUIResource("Arial",Font.BOLD , 70));
 		score.setForeground(Color.white);
 		
 		scoreLabel.setBounds(320, 20, 200, 50);
-		score.setBounds(340, 70, 120, 80);
+		score.setBounds(340, 70, 200, 80);
 		
 		panelTeam1.setBackground(Color.black);
 		panelTeam1.setBounds(140,160,200,600);
@@ -149,9 +149,45 @@ public class GameDisplay extends JFrame implements ActionListener{
 		Object source = e.getSource();
 		if(source.equals(start))
 		{
+			TimerTask task = new TimerTask() {
+				
+				@Override
+				public void run() {
+					
+					
+					o.p1.readyToThrow(t, o, c, b);
+					o.p2.readyToThrow(t, o, c, b);
+					o.p3.readyToThrow(t, o, c, b);
+					o.p4.readyToThrow(t, o, c, b);
+					o.p5.readyToThrow(t, o, c, b);
+					
+					t.p1.readyToThrow(t, o, c, b);
+					t.p2.readyToThrow(t, o, c, b);
+					t.p3.readyToThrow(t, o, c, b);
+					t.p4.readyToThrow(t, o, c, b);
+					t.p5.readyToThrow(t, o, c, b);
+					
+					score.setText(t.getScore()+":"+o.getScore());
+					p1t1.setText("Player 1: "+t.p1.getPts());
+					p2t1.setText("Player 2: "+t.p2.getPts());
+					p3t1.setText("Player 3: "+t.p3.getPts());
+					p4t1.setText("Player 4: "+t.p4.getPts());
+					p5t1.setText("Player 5: "+t.p5.getPts());
+					
+					p1t2.setText("Player 1: "+o.p1.getPts());
+					p2t2.setText("Player 2: "+o.p2.getPts());
+					p3t2.setText("Player 3: "+o.p3.getPts());
+					p4t2.setText("Player 4: "+o.p4.getPts());
+					p5t2.setText("Player 5: "+o.p5.getPts());
+					
+
 			
 		}
 		
-	}
+	};
+	timer.scheduleAtFixedRate(task, 0,500);
 
+
+}
+	}
 }

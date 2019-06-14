@@ -1,4 +1,4 @@
-import java.util.Random;
+
 
 public class FirstTeam extends Team{
 
@@ -12,7 +12,6 @@ public class FirstTeam extends Team{
 
 	}
 	
-	Random rand = new Random();
 	
 	@Override
 	public void spawn() {

@@ -1,8 +1,7 @@
-import java.util.Random;
+
 
 public class Teammate extends Player{
 
-	static Random rand = new Random();
 	
 	public Teammate()
 	{
@@ -64,7 +63,7 @@ public class Teammate extends Player{
 	public void throwBall(Team t, Team o, Court c, Ball b) {
 		if(checkPosition(c)==1)
 		{
-			if(getTwoPointsThrow() + rand.nextInt(6)>10)
+			if(getTwoPointsThrow() + rand.nextInt(15)>10)
 			{
 				t.setScore(t.getScore()+2);
 				this.setPts(getPts()+2);
@@ -78,7 +77,7 @@ public class Teammate extends Player{
 		}
 		else if(checkPosition(c)==0) 
 		{
-			if(getThreePointsThorw()+rand.nextInt(6)>10)
+			if(getThreePointsThorw()+rand.nextInt(5)>10)
 			{
 				t.setScore(t.getScore()+3);
 				this.setPts(getPts()+3);

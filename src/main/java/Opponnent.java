@@ -1,8 +1,8 @@
-import java.util.Random;
+
 
 public class Opponnent extends Player {
 	
-	static Random rand=new Random();
+	
 	public Opponnent() {
 		super(rand.nextInt(10),rand.nextInt(10),rand.nextInt(10),rand.nextInt(10),rand.nextInt(10),rand.nextInt(10),rand.nextInt(10),false);
 		
@@ -41,7 +41,7 @@ public class Opponnent extends Player {
 	
 		if(this.checkPosition(c)==1)
 		{
-			if(this.getTwoPointsThrow() + rand.nextInt(6)>10)
+			if(this.getTwoPointsThrow() + rand.nextInt(15)>10)
 			{
 				o.setScore(o.getScore()+2);
 				this.setPts(getPts()+2);
@@ -55,7 +55,7 @@ public class Opponnent extends Player {
 		}
 		else if(this.checkPosition(c)==0) 
 		{
-			if(this.getThreePointsThorw()+rand.nextInt(6)>10)
+			if(this.getThreePointsThorw()+rand.nextInt(5)>10)
 			{
 				o.setScore(o.getScore()+3);
 				this.setPts(getPts()+3);

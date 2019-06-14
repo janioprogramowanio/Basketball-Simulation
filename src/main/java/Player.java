@@ -3,7 +3,7 @@ import java.util.Random;
 
 public abstract class Player implements Moving,Distance,PlayerActions{
 
-	
+	static Random rand = new Random();
 	private int twoPointsThrow;
 	private int threePointsThorw;
 	private int pass;
