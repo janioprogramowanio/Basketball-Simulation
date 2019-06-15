@@ -11,7 +11,9 @@ public class FirstTeam extends Team{
 		p5=new Teammate();
 
 	}
-	
+	/**
+	 * 
+	 */
 	
 	@Override
 	public void spawn() {

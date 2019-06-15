@@ -12,9 +12,15 @@ public abstract class Team {
 	
 	Random rand = new Random();
 	
+	/**
+	 * Rozmieszczenie zawodników na boisku poprzez przydzielenie im losowych wspó³rzêdnych
+	 */
 	public abstract void spawn();
 	
-	
+	/**
+	 * Rozmieszczenie zawodników na boisku
+	 * i przydzielenie wartoœci false do posiadania pi³ki 
+	 */
 	public void newWinAction()
 	{
 		spawn();
@@ -24,7 +30,10 @@ public abstract class Team {
 		p4.setHasBall(false);
 		p5.setHasBall(false);
 	}
-	
+	/**
+	 * Rozmieszczenie zawodników na boisku
+	 * i przydzielenie pi³ki pierwszemu zawodnikowi
+	 */
 	public void newLooseAction()
 	{
 		spawn();

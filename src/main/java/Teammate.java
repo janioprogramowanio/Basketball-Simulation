@@ -8,6 +8,10 @@ public class Teammate extends Player{
 		super(rand.nextInt(10),rand.nextInt(10),rand.nextInt(10),rand.nextInt(10),rand.nextInt(10),rand.nextInt(10),rand.nextInt(10),false);
 		
 	}
+	/**
+	 * Zmiany po³o¿enia zawodnika poprzez zmiany jego wspo³rzêdnych x i y
+
+	 */
 	
 	@Override
 	public void moving() {
@@ -35,6 +39,11 @@ public class Teammate extends Player{
 		 }
 		
 	}
+	/**
+	 * Sprawdzanie czy zawodnik przekroczy³ po³owê boiska ¿eby móg³ wykonaæ rzut,
+	 * jeœli nie dalsze poruszanie, podania
+	 *	
+	 */
 
 	@Override
 	public void readyToThrow(Team t, Team o, Court c, Ball b) {
@@ -57,7 +66,13 @@ public class Teammate extends Player{
 		
 	}
 		
-	
+	/**
+	 * Metoda odpowiedzialna za rzut pi³k¹ sprawdza czy umiejêtnoœci 
+	 * rzutu zawodnika i dolosowuje wspó³czynnik losowy. <br>
+	 * Jeœli suma tych obu wartoœci jest wiêksza 10 to dru¿yna zdobywa punkty i nastêpuje ponowne rozmieszczenie zawodników na boisku, jeœli nie uruchamiana jest metoda zbiórki.
+	 * 
+	 *  
+	 */
 
 	@Override
 	public void throwBall(Team t, Team o, Court c, Ball b) {

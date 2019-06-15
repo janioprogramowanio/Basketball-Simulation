@@ -14,6 +14,17 @@ public abstract class Player implements Moving,Distance,PlayerActions{
 	private boolean hasBall;
 	private int pts=0;
 	
+	/**
+	 * Konstruktor zawodników przypisuje losowe wartoœci ich atrybutom
+	 * @param twoPointsThrow Rzut za 2 punkty
+	 * @param threePointsThrow Rzut za 3 punkty 
+	 * @param pass Podanie
+	 * @param steal Przechwyt
+	 * @param rebound Zbiórka 
+	 * @param xPosition Wspó³rzêdna X
+	 * @param yPosition Wspó³rzêdna Y
+	 * @param hasBall Posiadanie pi³ki
+	 */
 	public Player(int twoPointsThrow, int threePointsThrow, int pass, int steal, int rebound, int xPosition, int yPosition, boolean hasBall)
 	{
 		this.twoPointsThrow=twoPointsThrow;
@@ -82,13 +93,19 @@ public abstract class Player implements Moving,Distance,PlayerActions{
 	public void setPts(int pts) {
 		this.pts = pts;
 	}
-	
+	/**
+	 * Oblicza dystans od innego zawodnika poprzez porównanie ich wspó³rzêdnych
+	 */
 	
 	@Override
 	public int distanceFromPlayer(Player p) {
 		
 		return Math.abs(xPosition-p.getxPosition()+Math.abs(yPosition-p.getyPosition()));
 	}
+	/**
+	 * Zwraca najbli¿szego zawodnika od zawodnika który wykonuje t¹ metodê 
+	 */
+	
 	@Override
 	public Player nearestPlayer(Team t) {
 		int [] distance = new int [5];
@@ -128,6 +145,10 @@ public abstract class Player implements Moving,Distance,PlayerActions{
 		return null;
 		
 	}
+	/**
+	 * Sprawdza w jakim obszarze boiska znajduje siê zawodnik. <br>
+	 * Jeœli zwrócona jest 1 to jest pole rzutu za 2 punkty, dla 0 jest to pole rzutu za 3.
+	 */
 	
 	@Override
 	public int checkPosition(Court c) {

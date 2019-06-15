@@ -1,4 +1,3 @@
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -17,26 +16,26 @@ import javax.swing.plaf.FontUIResource;
 public class GameDisplay extends JFrame implements ActionListener{
 	
 	
-	JFrame frame = new JFrame();
-	JLabel team1 = new JLabel("TEAM 1");
-	JLabel team2 = new JLabel("TEAM 2");
+	private JFrame frame = new JFrame();
+	private JLabel team1 = new JLabel("TEAM 1");
+	private JLabel team2 = new JLabel("TEAM 2");
 	
-	PlayerLabel p1t1,p2t1,p3t1,p4t1,p5t1,p1t2,p2t2,p3t2,p4t2,p5t2;
+	private PlayerLabel p1t1,p2t1,p3t1,p4t1,p5t1,p1t2,p2t2,p3t2,p4t2,p5t2;
 	
 
-	JLabel scoreLabel = new JLabel("SCORE");
-	JLabel score;
-	JButton start;
+	private JLabel scoreLabel = new JLabel("SCORE");
+	private JLabel scoreT1, scoreT2, space;
+	private JButton start;
 	
-	JPanel panelTeam1 = new JPanel();
-	JPanel panelTeam2 = new JPanel();
+	private JPanel panelTeam1 = new JPanel();
+	private JPanel panelTeam2 = new JPanel();
 	
 	
-	Team t;
-	Team o;
-	Ball b;
-	Court c;
-	Timer timer;
+	private Team t ,o;
+	private Ball b;
+	private Court c;
+	private Timer timer;
+	private long startGame;
 	
 	
 	
@@ -78,12 +77,23 @@ public class GameDisplay extends JFrame implements ActionListener{
 		scoreLabel.setFont(new FontUIResource("Arial",Font.BOLD , 40));
 		scoreLabel.setForeground(Color.YELLOW);
 		
-		score = new JLabel(t.getScore()+":"+o.getScore());
-		score.setFont(new FontUIResource("Arial",Font.BOLD , 70));
-		score.setForeground(Color.white);
+		scoreT1 = new JLabel(Integer.toString(t.getScore()));
+		scoreT1.setFont(new FontUIResource("Arial",Font.BOLD , 70));
+		scoreT1.setForeground(Color.white);
+		
+		scoreT2 = new JLabel(Integer.toString(o.getScore()));
+		scoreT2.setFont(new FontUIResource("Arial",Font.BOLD , 70));
+		scoreT2.setForeground(Color.white);
+		
+		space = new JLabel(":");
+		space.setFont(new FontUIResource("Arial",Font.BOLD , 70));
+		space.setForeground(Color.white);
 		
 		scoreLabel.setBounds(320, 20, 200, 50);
-		score.setBounds(340, 70, 200, 80);
+		scoreT1.setBounds(295, 70, 100, 80);
+		space.setBounds(380,70,50,80);
+		scoreT2.setBounds(415, 70, 100, 80);
+
 		
 		panelTeam1.setBackground(Color.black);
 		panelTeam1.setBounds(140,160,200,600);
@@ -124,7 +134,9 @@ public class GameDisplay extends JFrame implements ActionListener{
 		frame.add(panelTeam1);
 		frame.add(panelTeam2);
 		frame.add(scoreLabel);
-		frame.add(score);
+		frame.add(scoreT1);
+		frame.add(space);
+		frame.add(scoreT2);
 		frame.add(start);
 		
 		
@@ -135,26 +147,23 @@ public class GameDisplay extends JFrame implements ActionListener{
 		
 	}
 	
-	public void labelCreator (JLabel label ,String name)
-	{
-		label = new JLabel(name);
-		
-		
-		
-	}
-
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		
 		Object source = e.getSource();
 		if(source.equals(start))
 		{
+			startGame=System.currentTimeMillis();
+			
+			
 			TimerTask task = new TimerTask() {
+				
 				
 				@Override
 				public void run() {
 					
-					
+					if(System.currentTimeMillis()-startGame<240000) {
 					o.p1.readyToThrow(t, o, c, b);
 					o.p2.readyToThrow(t, o, c, b);
 					o.p3.readyToThrow(t, o, c, b);
@@ -167,7 +176,8 @@ public class GameDisplay extends JFrame implements ActionListener{
 					t.p4.readyToThrow(t, o, c, b);
 					t.p5.readyToThrow(t, o, c, b);
 					
-					score.setText(t.getScore()+":"+o.getScore());
+					scoreT1.setText(Integer.toString(t.getScore()));
+					scoreT2.setText(Integer.toString(o.getScore()));
 					p1t1.setText("Player 1: "+t.p1.getPts());
 					p2t1.setText("Player 2: "+t.p2.getPts());
 					p3t1.setText("Player 3: "+t.p3.getPts());
@@ -179,15 +189,25 @@ public class GameDisplay extends JFrame implements ActionListener{
 					p3t2.setText("Player 3: "+o.p3.getPts());
 					p4t2.setText("Player 4: "+o.p4.getPts());
 					p5t2.setText("Player 5: "+o.p5.getPts());
+					}
+					else {
+						scoreLabel.setText("FINAL SCORE");
+						scoreLabel.setBounds(270, 20, 300, 50);
+						timer.cancel();
+						
+
+
 					
+					}
 
 			
 		}
 		
 	};
 	timer.scheduleAtFixedRate(task, 0,500);
-
+			}
+			
 
 }
 	}
-}
+
