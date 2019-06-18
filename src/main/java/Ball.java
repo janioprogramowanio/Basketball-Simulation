@@ -5,6 +5,11 @@ public class Ball implements BallActions{
 
 		Random rand = new Random();
 		
+		/**
+		 * Metoda odpowiedzialna za podawanie pi³ki miêdzy zawodnikami. <br>
+		 * Sprawdza czy zawodnik posiadza pi³kê pózniej losuje zawodnka do którego trafi podanie.
+		 * 
+		 */
 	@Override
 	public void passBall(Team t) {
 		
@@ -28,9 +33,14 @@ public class Ball implements BallActions{
 	
 		
 	}
+	/**
+	 * Metoda odpowiedzialna za odbiór pi³ki.<br>
+	 * Porównuje atrybuty podania zawodnika jednej dru¿yny z atrybutami przechwytu zawododnika drugiej dru¿yny i dolicza wspó³czynnik losowy. <br>
+	 * W zale¿noœci od tego dzia³ania przypisuje pi³kê zawodnikowi o wiêkszej sumie tych atrybutów.
+	 */
 
 	@Override
-	public void reclaimBall(Team t, OpponnentTeam o) {
+	public void reclaimBall(Team t, Team o) {
 		
 		int rand1=rand.nextInt(10);
 		int rand2=rand.nextInt(10);
@@ -49,7 +59,7 @@ public class Ball implements BallActions{
 		if(checkBall(playerList)<=4)
 		{
 			if(playerList.get(checkBall(playerList)).getPass()+rand1>
-				playerList.get(checkBall(playerList)).nearestPlayer(o).getSteal())
+				playerList.get(checkBall(playerList)).nearestPlayer(o).getSteal()+rand2)
 			{
 				passBall(t);
 			}
@@ -62,7 +72,7 @@ public class Ball implements BallActions{
 		else
 		{
 			if(playerList.get(checkBall(playerList)).getPass()+rand1>
-			playerList.get(checkBall(playerList)).nearestPlayer(t).getSteal())
+			playerList.get(checkBall(playerList)).nearestPlayer(t).getSteal()+rand2)
 		{
 			passBall(o);
 		}
@@ -75,7 +85,11 @@ public class Ball implements BallActions{
 		
 		
 	}
-
+	/**
+	 * Porównuje umiejêtonoœci zbiórki dwóch zawodników i dolicza do nich wspó³czynnik losowy. <br>
+	 * W zale¿noœci od wyniku przypisuje pi³kê zawodnikowi o wiêkszej sumie tych atruybutów.
+	 */
+	
 	@Override
 	public void rebound(Team t , Player p) {
 		if(p.getRebound()+rand.nextInt(10)>p.nearestPlayer(t).getRebound()+rand.nextInt(10))
@@ -92,7 +106,9 @@ public class Ball implements BallActions{
 		}
 		
 	}
-	
+	/**
+	 * Sprawdza czy zawodnik jest w posiadaniu pi³ki
+	 */
 
 	@Override
 	public int checkBall(ArrayList<Player> playerList) {

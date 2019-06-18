@@ -1,26 +1,24 @@
 
 
-public class Opponnent extends Player {
+public class Teammate extends Player{
+
 	
-	
-	public Opponnent() {
+	public Teammate()
+	{
 		super(rand.nextInt(10),rand.nextInt(10),rand.nextInt(10),rand.nextInt(10),rand.nextInt(10),rand.nextInt(10),rand.nextInt(10),false);
 		
 	}
-
 	/**
 	 * Zmiany po³o¿enia zawodnika poprzez zmiany jego wspo³rzêdnych x i y
 
 	 */
 	
 	@Override
-	public void moving()
-	{
+	public void moving() {
 		
 		if((getyPosition()>1 && getyPosition()<40) && (getxPosition()>1 && getxPosition()<29))
-		 {	
-			
-			setyPosition(getyPosition() - rand.nextInt(2));
+		 {
+			setyPosition(getyPosition() + rand.nextInt(2));
 			setxPosition(getxPosition() + rand.nextInt(2)-1);
 		 }
 		  if (getyPosition()<=1)
@@ -39,7 +37,35 @@ public class Opponnent extends Player {
 		 {
 			 setxPosition(getxPosition() - 4);
 		 }
+		
 	}
+	/**
+	 * Sprawdzanie czy zawodnik przekroczy³ po³owê boiska ¿eby móg³ wykonaæ rzut,
+	 * jeœli nie dalsze poruszanie, podania
+	 *	
+	 */
+
+	@Override
+	public void readyToThrow(Team t, Team o, Court c, Ball b) {
+		
+		this.moving();
+		if(getyPosition()>20)
+		{
+			if(isHasBall())
+			{
+				throwBall(t, o, c, b);
+			}
+			else
+			{
+				moving();
+				b.reclaimBall(t, o);
+			}
+			
+		}
+		this.moving();
+		
+	}
+		
 	/**
 	 * Metoda odpowiedzialna za rzut pi³k¹ sprawdza czy umiejêtnoœci 
 	 * rzutu zawodnika i dolosowuje wspó³czynnik losowy. <br>
@@ -47,65 +73,37 @@ public class Opponnent extends Player {
 	 * 
 	 *  
 	 */
-	
+
 	@Override
 	public void throwBall(Team t, Team o, Court c, Ball b) {
-	
-		if(this.checkPosition(c)==1)
+		if(checkPosition(c)==1)
 		{
-			if(this.getTwoPointsThrow() + rand.nextInt(15)>10)
+			if(getTwoPointsThrow() + rand.nextInt(15)>10)
 			{
-				o.setScore(o.getScore()+2);
+				t.setScore(t.getScore()+2);
 				this.setPts(getPts()+2);
-				o.newWinAction();
-				t.newLooseAction();
+				t.newWinAction();
+				o.newLooseAction();
 			}
 			else
 			{
-				b.rebound(t,this);
+				b.rebound(o,this);
 			}
 		}
-		else if(this.checkPosition(c)==0) 
+		else if(checkPosition(c)==0) 
 		{
-			if(this.getThreePointsThorw()+rand.nextInt(5)>10)
+			if(getThreePointsThorw()+rand.nextInt(5)>10)
 			{
-				o.setScore(o.getScore()+3);
+				t.setScore(t.getScore()+3);
 				this.setPts(getPts()+3);
-				o.newWinAction();
-				t.newLooseAction();
+				t.newWinAction();
+				o.newLooseAction();
 			}
 			else
 			{
-				b.rebound(t,this);
+				b.rebound(o,this);
 			}
 		}
-
-
-	}
-	/**
-	 * Sprawdzanie czy zawodnik przekroczy³ po³owê boiska ¿eby móg³ wykonaæ rzut,
-	 * jeœli nie dalsze poruszanie, podania
-	 *	
-	 */
-	@Override
-	public void readyToThrow(Team t, Team o, Court c, Ball b) {
-		
-		this.moving();
-		if(this.getyPosition()<20)
-		{
-			if(this.isHasBall())
-			{
-				this.throwBall(t, o, c, b);
-				
-			}
-			else
-			{
-				this.moving();
-				b.reclaimBall(t, o);
-			}
-			
-		}
-			this.moving();
 		
 	}
 

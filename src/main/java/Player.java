@@ -1,17 +1,42 @@
 import java.util.Arrays;
 import java.util.Random;
 
-public class Player implements Moving,Distance,PlayerActions{
+public abstract class Player implements Moving,Distance,PlayerActions{
 
-	Random rand = new Random();
-	private int twoPointsThrow=rand.nextInt(10);
-	private int threePointsThorw=rand.nextInt(10);
-	private int pass=rand.nextInt(10);
-	private int steal=rand.nextInt(10);
-	private int rebound=rand.nextInt(10);
+	static Random rand = new Random();
+	private int twoPointsThrow;
+	private int threePointsThorw;
+	private int pass;
+	private int steal;
+	private int rebound;
 	private int xPosition;
 	private int yPosition;
-	private boolean hasBall=false;
+	private boolean hasBall;
+	private int pts=0;
+	
+	/**
+	 * Konstruktor zawodników przypisuje losowe wartoœci ich atrybutom
+	 * @param twoPointsThrow Rzut za 2 punkty
+	 * @param threePointsThrow Rzut za 3 punkty 
+	 * @param pass Podanie
+	 * @param steal Przechwyt
+	 * @param rebound Zbiórka 
+	 * @param xPosition Wspó³rzêdna X
+	 * @param yPosition Wspó³rzêdna Y
+	 * @param hasBall Posiadanie pi³ki
+	 */
+	public Player(int twoPointsThrow, int threePointsThrow, int pass, int steal, int rebound, int xPosition, int yPosition, boolean hasBall)
+	{
+		this.twoPointsThrow=twoPointsThrow;
+		this.threePointsThorw=threePointsThrow;
+		this.pass=pass;
+		this.steal=steal;
+		this.rebound=rebound;
+		this.xPosition=xPosition;
+		this.yPosition=yPosition;
+		this.hasBall=hasBall;
+		
+	}
 	
 	
 	public int getTwoPointsThrow() {
@@ -62,38 +87,25 @@ public class Player implements Moving,Distance,PlayerActions{
 	public void setHasBall(boolean hasBall) {
 		this.hasBall = hasBall;
 	}
-	
-	@Override
-	public void moving() {
-		
-		if((yPosition>2 && yPosition<39) && (xPosition>2 && yPosition<29))
-		 {
-			yPosition+=rand.nextInt(2);
-			xPosition+=rand.nextInt(2)-1;
-		 }
-		  if (yPosition<=2)
-		 {
-			 yPosition+=4;
-		 }
-		  if(yPosition>=39)
-		 {
-			 yPosition-=4;
-		 }
-		  if (xPosition<=2)
-		 {
-			 xPosition+=4;
-		 }
-		  if(xPosition>=29)
-		 {
-			 xPosition-=4;
-		 }
-		
+	public int getPts() {
+		return pts;
 	}
+	public void setPts(int pts) {
+		this.pts = pts;
+	}
+	/**
+	 * Oblicza dystans od innego zawodnika poprzez porównanie ich wspó³rzêdnych
+	 */
+	
 	@Override
 	public int distanceFromPlayer(Player p) {
 		
 		return Math.abs(xPosition-p.getxPosition()+Math.abs(yPosition-p.getyPosition()));
 	}
+	/**
+	 * Zwraca najbli¿szego zawodnika od zawodnika który wykonuje t¹ metodê 
+	 */
+	
 	@Override
 	public Player nearestPlayer(Team t) {
 		int [] distance = new int [5];
@@ -132,11 +144,11 @@ public class Player implements Moving,Distance,PlayerActions{
 		else
 		return null;
 		
-		
-
-
-		
 	}
+	/**
+	 * Sprawdza w jakim obszarze boiska znajduje siê zawodnik. <br>
+	 * Jeœli zwrócona jest 1 to jest pole rzutu za 2 punkty, dla 0 jest to pole rzutu za 3.
+	 */
 	
 	@Override
 	public int checkPosition(Court c) {
@@ -148,56 +160,9 @@ public class Player implements Moving,Distance,PlayerActions{
 		else 
 			return 0;
 	}
+
+
 	
-	@Override
-	public void throwBall(Team t, OpponnentTeam o, Court c, Ball b) {
-		
-		if(checkPosition(c)==1)
-		{
-			if(twoPointsThrow + rand.nextInt(6)>10)
-			{
-				t.setScore(t.getScore()+2);
-				t.newWinAction();
-				o.newLooseAction();
-			}
-			else
-			{
-				b.rebound(o,this);
-			}
-		}
-		else if(checkPosition(c)==0) 
-		{
-			if(threePointsThorw+rand.nextInt(6)>10)
-			{
-				t.setScore(t.getScore()+3);
-				t.newWinAction();
-				o.newLooseAction();
-			}
-			else
-			{
-				b.rebound(o,this);
-			}
-		}
-		
-		
-	}
-	@Override
-	public void readyToThrow(Team t, OpponnentTeam o, Court c, Ball b) {
-		
-		moving();
-		if(yPosition>20)
-		{
-			if(hasBall)
-			{
-				throwBall(t, o, c, b);
-			}
-			else
-			{
-				moving();
-				b.reclaimBall(t, o);
-			}
-			
-		}
-		
-	}
+	
+	
 }
